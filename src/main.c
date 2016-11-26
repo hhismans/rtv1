@@ -6,20 +6,19 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:37:06 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/21 17:30:00 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/26 08:04:09 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
 
 int		init_mlx(t_env *e)
 {
 	e->mlx = mlx_init();
 	e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, "RTv1 by hhismans");
 	e->img = mlx_new_image(e->mlx, WIDTH, HEIGHT);
-	mlx_key_hook(e->win, key_hook, e);
-	mlx_mouse_hook(e->win, mouse_hook, e);
+	//mlx_key_hook(e->win, key_hook, e);
+	//mlx_mouse_hook(e->win, mouse_hook, e);
 	mlx_expose_hook(e->win, expose, e);
 	//mlx_hook(e->win, MOTION_NOTIFY, PTR_MOTION_MASK, motion_hook, e);
 	mlx_loop(e->mlx);
@@ -28,7 +27,8 @@ int		init_mlx(t_env *e)
 
 void	init_env(t_env *e)
 {
-
+	e->get_pixel_color = colortest;
+	e->expose_function = display;
 }
 
 void	mlx_pixel_put_img(void *img_ptr, int x, int y, int color)
@@ -53,6 +53,9 @@ void	mlx_pixel_put_img(void *img_ptr, int x, int y, int color)
 }
 int main()
 {
+	t_env e;
 
+	init_env(&e);
+	init_mlx(&e);
 	return (0);
 }
