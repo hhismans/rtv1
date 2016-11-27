@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:17:49 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/26 00:47:05 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/27 05:46:58 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include "mlx.h"
 # include "libft.h"
 # include "define.h"
+# include <stdlib.h>
 # include <math.h>
+# include <stdio.h>
 
 # define WIDTH 640
 # define HEIGHT 480
@@ -67,14 +69,16 @@ typedef struct		s_plane
 	float			r;
 }					t_plane;
 
-typedef struct		s_obj
+typedef struct			s_obj_list
 {
-	char	*type;
-	void	*obj;
-}					t_obj;
+	int					type;
+	void				*obj;
+	struct s_obj_list	*next;
+}						t_obj_list;
 
 typedef struct		s_env
 {
+	t_obj_list		*objs;
 	void			*mlx;
 	void			*win;
 	void			*img;
@@ -83,11 +87,44 @@ typedef struct		s_env
 	int				(*get_pixel_color)();
 }					t_env;
 
-int		expose(t_env *e);
-int		mouse_hook(int keycode, int x, int y, t_env *e);
-int		expose(t_env *e);
-int		key_hook(int keycode, t_env *e);
-int		colortest(int x, int y, t_env *e);
-void	mlx_pixel_put_img(void *img_ptr, int x, int y, int color);
-void	display(t_env *e);
+typedef struct		s_data
+{
+	t_vector	vector;
+	float		data[1];
+	int			color;
+	int			type;
+}					t_data;
+
+
+t_sphere		*new_sphere(const t_data data);
+
+
+t_obj_list		*new_obj(t_data data);
+t_obj_list		*pushback_obj(t_obj_list *list, t_data data);
+
+int				expose(t_env *e);
+int				mouse_hook(int keycode, int x, int y, t_env *e);
+int				expose(t_env *e);
+int				key_hook(int keycode, t_env *e);
+int				colortest(int x, int y, t_env *e);
+void			mlx_pixel_put_img(void *img_ptr, int x, int y, int color);
+void			display(t_env *e);
+
+t_camera		*cam_init(t_camera *cam);
+t_vector		*set_vector(t_vector *v, float x, float y, float z);
+t_vector		*new_vector(float x, float y, float z);
+t_vector		*multv(t_vector *a, const float operand);
+t_vector		*vectorial(const t_vector *a, const t_vector *b);
+t_vector		*scalar(t_vector *a, const t_vector *b);
+t_vector		*addv(t_vector *a, const t_vector *b);
+float			dist(const t_vector *a, const t_vector *b);
+
+t_vector		*cpy_vector(t_vector *dst, const t_vector *src);
+
+t_viewplane		*new_vp(int width, int height, float dist);
+t_vector		*get_viewplane_upleft(const t_camera *cam);
+t_vector		*subv(t_vector *a, const t_vector *b);
+
+//typedef void * (*new_obj_fct)(t_data);
+
 #endif

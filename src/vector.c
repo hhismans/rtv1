@@ -6,17 +6,36 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 19:28:48 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/26 00:11:30 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/27 03:40:51 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+
+float			dist(const t_vector *a, const t_vector *b)
+{
+	float ret;
+
+	ret = (a->x - b->x) * (a->x - b->x)
+		+ (a->y - b->y) * (a->y - b->y)
+		+ (a->z - b->z) * (a->z - b->z);
+	return (ret);
+}
 
 t_vector		*addv(t_vector *a, const t_vector *b)
 {
 	a->x += b->x;
 	a->y += b->y;
 	a->z += b->z;
+	return (a);
+}
+
+t_vector		*subv(t_vector *a, const t_vector *b)
+{
+	a->x -= b->x;
+	a->y -= b->y;
+	a->z -= b->z;
 	return (a);
 }
 
@@ -31,7 +50,7 @@ t_vector		*scalar(t_vector *a, const t_vector *b)
 t_vector		*vectorial(const t_vector *a, const t_vector *b)
 {
 	t_vector *ret;
-	ret = new_vector(a->y * b->z - a.z * b.y,
+	ret = new_vector(a->y * b->z - a->z * b->y,
 						a->z * b->x - a->x * b->z,
 						a->x * b->y - a->y * b->x);
 	return (ret);
@@ -50,9 +69,13 @@ t_vector		*new_vector(float x, float y, float z)
 	t_vector *ret;
 
 	ret = (t_vector *)malloc(sizeof(t_vector));
-	ret->x = x;
-	ret->y = y;
-	ret->z = z;
+	if (ret)
+	{
+		ret->x = x;
+		ret->y = y;
+		ret->z = z;
+	}
+	return (ret);
 }
 
 t_vector		*set_vector(t_vector *v, float x, float y, float z)
@@ -60,8 +83,16 @@ t_vector		*set_vector(t_vector *v, float x, float y, float z)
 	v->x = x;
 	v->y = y;
 	v->z = z;
+	return (v);
 }
 
+t_vector		*cpy_vector(t_vector *dst, const t_vector *src)
+{
+	dst->x = src->x;
+	dst->y = src->y;
+	dst->z = src->z;
+	return (dst);
+}
 /*int main()
 {
 	t_camera *cam;
