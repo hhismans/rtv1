@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:17:49 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/27 05:46:58 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/28 07:52:10 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <stdio.h>
+# include <float.h>
 
 # define WIDTH 640
 # define HEIGHT 480
@@ -47,7 +48,7 @@ typedef struct		s_viewplane
 typedef struct		s_camera
 {
 	t_vector		*o;
-	t_vector		*vw_upleft;
+	t_vector		*vp_upleft;
 	t_vector		*dir;
 	t_vector		*up_vunit;
 	t_vector		*right_vunit;
@@ -82,7 +83,7 @@ typedef struct		s_env
 	void			*mlx;
 	void			*win;
 	void			*img;
-	t_camera		cam;
+	t_camera		*cam;
 	void			(*expose_function)();
 	int				(*get_pixel_color)();
 }					t_env;
@@ -121,10 +122,15 @@ float			dist(const t_vector *a, const t_vector *b);
 
 t_vector		*cpy_vector(t_vector *dst, const t_vector *src);
 
-t_viewplane		*new_vp(int width, int height, float dist);
+t_viewplane		*new_vp(float width, float height, float dist);
 t_vector		*get_viewplane_upleft(const t_camera *cam);
 t_vector		*subv(t_vector *a, const t_vector *b);
 
+
+float	throw_ray_sphere(const t_ray ray, const t_sphere *sphere);
+float	det(float a, float b, float c);
+float	squared(float nb);
+int		get_color(int x, int y, t_env *e);
 //typedef void * (*new_obj_fct)(t_data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 19:28:48 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/27 03:40:51 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/28 04:10:24 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,19 @@ t_vector		*cpy_vector(t_vector *dst, const t_vector *src)
 	dst->y = src->y;
 	dst->z = src->z;
 	return (dst);
+}
+
+float			norme(const t_vector *vct)
+{
+	return (sqrtf(squared(vct->x) + squared(vct->y) + squared(vct->z)));
+}
+
+t_vector		*normalize(t_vector *vct)
+{
+	vct->x /= norme(vct);
+	vct->y /= norme(vct);
+	vct->z /= norme(vct);
+	return (vct);
 }
 /*int main()
 {

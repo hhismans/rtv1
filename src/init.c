@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:46:43 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/27 03:39:08 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/28 07:52:03 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ t_camera *cam_init(t_camera *cam)
 	cam->right_vunit = new_vector(UNIT_RIGHTX, UNIT_RIGHTY, UNIT_RIGHTZ);
 	cam->dir = vectorial(cam->up_vunit, cam->right_vunit);
 	cam->vp = new_vp(VP_WIDTH, VP_HEIGHT, DEFAULT_VP_DIST);
-	cam->vw_upleft = get_viewplane_upleft(cam);
+	cam->vp_upleft = get_viewplane_upleft(cam);
 	cam->xinc = cam->vp->width / WIDTH;
 	cam->yinc = cam->vp->height / HEIGHT;
 	return (cam);
 }
 
-t_viewplane		*new_vp(int width, int height, float dist)
+t_viewplane		*new_vp(float width, float height, float dist)
 {
 	t_viewplane *ret;
 	ret = (t_viewplane *)malloc(sizeof(t_viewplane));
