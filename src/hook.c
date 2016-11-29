@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 16:06:14 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/25 23:46:12 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 05:23:44 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	display(t_env *e)
 		}
 		i++;
 	}
+	printf("display done \n");
 	mlx_put_image_to_window(e->mlx, e->win, e->img, 0, 0);
 }
 

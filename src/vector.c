@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 19:28:48 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/28 04:10:24 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 03:48:27 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,12 @@ float			norme(const t_vector *vct)
 
 t_vector		*normalize(t_vector *vct)
 {
-	vct->x /= norme(vct);
-	vct->y /= norme(vct);
-	vct->z /= norme(vct);
+	float vct_norme;
+
+	vct_norme = norme(vct);
+	vct->x /= vct_norme;
+	vct->y /= vct_norme;
+	vct->z /= vct_norme;
 	return (vct);
 }
 /*int main()

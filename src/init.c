@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:46:43 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/28 07:52:03 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 04:06:24 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_vector	*get_viewplane_upleft(const t_camera *cam)
 	cpy_vector(&tmp_right, cam->right_vunit);
 	ret = new_vector(0, 0, 0);
 	addv(ret, cam->o);
-	addv(ret, addv(multv(&tmp_dir, cam->vp->dist),
+	addv(ret, addv(multv(&tmp_dir, -cam->vp->dist),
 					multv(&tmp_up, cam->vp->height / 2.0f)));
 	subv(ret, multv(&tmp_right, cam->vp->width / 2.0f));
 	return (ret);

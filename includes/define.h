@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:50:21 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/28 06:25:22 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 05:17:48 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define UNIT_RIGHTZ 0
 
 # define VP_WIDTH 8
-# define VP_HEIGHT 1.125
-# define DEFAULT_VP_DIST 1
+# define VP_HEIGHT 8
+# define DEFAULT_VP_DIST 4
 
 enum
 {

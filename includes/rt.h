@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:17:49 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/28 07:52:10 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 06:11:00 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@
 # include <math.h>
 # include <stdio.h>
 # include <float.h>
+# include <unistd.h>
 
 # define WIDTH 640
-# define HEIGHT 480
+# define HEIGHT 640
 # define BLUE 0xff
+# define RED 0xff0000
+# define BLACK 0
 
 typedef struct		s_vector
 {
@@ -66,8 +69,10 @@ typedef struct		s_sphere
 
 typedef struct		s_plane
 {
-	t_vector		c;
-	float			r;
+	float			a;
+	float			b;
+	float			c;
+	float			d;
 }					t_plane;
 
 typedef struct			s_obj_list
@@ -119,6 +124,8 @@ t_vector		*vectorial(const t_vector *a, const t_vector *b);
 t_vector		*scalar(t_vector *a, const t_vector *b);
 t_vector		*addv(t_vector *a, const t_vector *b);
 float			dist(const t_vector *a, const t_vector *b);
+t_vector		*normalize(t_vector *vct);
+float			norme(const t_vector *vct);
 
 t_vector		*cpy_vector(t_vector *dst, const t_vector *src);
 
