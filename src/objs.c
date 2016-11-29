@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:44:33 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/27 05:47:57 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 12:24:19 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ t_obj_list		*new_obj(t_data data)
 	t_obj_list *ret;
 
 
-	void * (*new_obj_tab[1])(t_data) = {
-		(void *)new_sphere
+	void * (*new_obj_tab[2])(t_data) = {
+		(void *)new_sphere,
+		(void *)new_light
 	};
 	if ((ret = (t_obj_list *)malloc(sizeof(t_obj_list))))
 	{

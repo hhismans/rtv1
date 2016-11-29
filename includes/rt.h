@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:17:49 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/29 06:11:00 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 12:35:05 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,12 @@
 # include "mlx.h"
 # include "libft.h"
 # include "define.h"
+
 # include <stdlib.h>
 # include <math.h>
 # include <stdio.h>
 # include <float.h>
 # include <unistd.h>
-
-# define WIDTH 640
-# define HEIGHT 640
-# define BLUE 0xff
-# define RED 0xff0000
-# define BLACK 0
 
 typedef struct		s_vector
 {
@@ -60,13 +55,6 @@ typedef struct		s_camera
 	float			yinc;
 }					t_camera;
 
-typedef struct		s_sphere
-{
-	t_vector		c;
-	float			r;
-	int				color;
-}					t_sphere;
-
 typedef struct		s_plane
 {
 	float			a;
@@ -74,6 +62,13 @@ typedef struct		s_plane
 	float			c;
 	float			d;
 }					t_plane;
+
+typedef struct		s_sphere
+{
+	t_vector		c;
+	float			r;
+	int				color;
+}					t_sphere;
 
 typedef struct			s_obj_list
 {
@@ -85,6 +80,7 @@ typedef struct			s_obj_list
 typedef struct		s_env
 {
 	t_obj_list		*objs;
+	t_obj_list		*lights;
 	void			*mlx;
 	void			*win;
 	void			*img;
@@ -100,6 +96,17 @@ typedef struct		s_data
 	int			color;
 	int			type;
 }					t_data;
+
+typedef struct		s_material
+{
+	int				diffuse_color;
+}					t_material;
+
+typedef struct		s_point_light
+{
+	t_vector	pos;
+	int color;
+}					t_point_light;
 
 
 t_sphere		*new_sphere(const t_data data);
@@ -126,6 +133,9 @@ t_vector		*addv(t_vector *a, const t_vector *b);
 float			dist(const t_vector *a, const t_vector *b);
 t_vector		*normalize(t_vector *vct);
 float			norme(const t_vector *vct);
+float			dot_product(const t_vector *a, const t_vector *b);
+
+float			throw_ray_sphere(const t_ray ray, const t_sphere *sphere);
 
 t_vector		*cpy_vector(t_vector *dst, const t_vector *src);
 
@@ -134,10 +144,17 @@ t_vector		*get_viewplane_upleft(const t_camera *cam);
 t_vector		*subv(t_vector *a, const t_vector *b);
 
 
-float	throw_ray_sphere(const t_ray ray, const t_sphere *sphere);
 float	det(float a, float b, float c);
 float	squared(float nb);
 int		get_color(int x, int y, t_env *e);
 //typedef void * (*new_obj_fct)(t_data);
 
+//ray
+void	set_ray(t_ray *ray, t_vector *dest, t_vector *origine);
+void	set_ray_parallele(t_ray *ray, t_vector *dest);
+
+int		get_light_at(t_vector *normal, t_vector *hit_point, t_point_light *light, t_material *mat);
+int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point);
+
+t_point_light *new_light(t_data data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 19:28:48 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/29 03:48:27 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 11:51:26 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,11 @@ t_vector		*normalize(t_vector *vct)
 	vct->y /= vct_norme;
 	vct->z /= vct_norme;
 	return (vct);
+}
+
+float			dot_product(const t_vector *a, const t_vector *b)
+{
+	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }
 /*int main()
 {

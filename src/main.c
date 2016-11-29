@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:37:06 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/29 06:23:24 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/11/29 12:49:22 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int		init_mlx(t_env *e)
 	e->mlx = mlx_init();
 	e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, "RTv1 by hhismans");
 	e->img = mlx_new_image(e->mlx, WIDTH, HEIGHT);
+	if (!e->mlx || !e->win || !e->img)
+	{
+		printf("error mlx init\n");
+		exit(0);
+	}
 	//mlx_key_hook(e->win, key_hook, e);
 	//mlx_mouse_hook(e->win, mouse_hook, e);
 	mlx_expose_hook(e->win, expose, e);
@@ -48,11 +53,22 @@ void	init_env(t_env *e)
 	set_vector(&data.vector, 0,0,3);
 // changer
 	e->objs = new_obj(data);
-	data.type = SPHERE;
+/*	data.type = SPHERE;
 	data.color = RED;
 	data.data[0] = 2;
 	set_vector(&data.vector, 0,2,3);
 	pushback_obj(e->objs, data);
+
+	data.type = SPHERE;
+	data.color = 0x00ff00;
+	data.data[0] = 2;
+	set_vector(&data.vector, 2.5,4,3);
+	pushback_obj(e->objs, data);*/
+
+	data.type = POINT_LIGHT;
+	data.color = WHITE;
+	set_vector(&data.vector, 0,0,0);
+	e->lights = new_obj(data);
 }
 
 void	mlx_pixel_put_img(void *img_ptr, int x, int y, int color)
