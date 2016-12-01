@@ -6,7 +6,7 @@
 #    By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/12/02 20:00:21 by hhismans          #+#    #+#              #
-#    Updated: 2016/11/27 04:19:44 by hhismans         ###   ########.fr        #
+#    Updated: 2016/11/29 12:22:48 by hhismans         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,10 @@ SRC =	src/main.c			\
 		src/sphere.c		\
 		src/vector.c		\
 		src/objs.c		\
+		src/generic_function.c		\
+		src/ray.c		\
+		src/util.c		\
+		src/light.c		\
 
 LIB =	-lft -L./libft\
 		-lmlx -L./minilibx_macos\
