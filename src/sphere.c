@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 16:28:52 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/29 11:36:40 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/01 15:38:13 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_sphere *new_sphere(const t_data data)
 	{
 		cpy_vector(&ret->c, &data.vector); // set center
 		ret->r = data.data[0];
-		ret->color = data.color;
+		ret->mat.diffuse_color = data.color;
+		ret->mat.bright = data.data[1];
 	}
 	return (ret);
 }
@@ -54,9 +55,9 @@ float	throw_ray_sphere(const t_ray ray, const t_sphere *sphere)
 	if (delta >= 0)
 	{
 		ret_t1 = (-b + sqrtf(delta)) / 2 * a;
-		if (ret_t1 < 0) ret_t1 = FLT_MAX;
+		if (ret_t1 < 0) ret_t1 = NO_INTERSEC;
 		ret_t2 = (-b - sqrtf(delta)) / 2 * a;
-		if (ret_t2 < 0) ret_t2 = FLT_MAX;
+		if (ret_t2 < 0) ret_t2 = NO_INTERSEC;
 		return ((ret_t1 < ret_t2) ? (ret_t1) : (ret_t2));
 	}
 	return (NO_INTERSEC);

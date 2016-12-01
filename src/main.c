@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:37:06 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/01 14:31:04 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/01 16:16:26 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,22 @@ void	init_env(t_env *e)
 // a changer
 	t_data	data;
 // changer
-	data.type = SPHERE;
-	data.color =  0x41698B;
-	data.data[0] = 4;
+	data.color = BLUE;
+	data.data[0] = 1;
 	data.data[1] = 1;
-	set_vector(&data.vector, 0,0,10);
+	set_vector(&data.vector, -10,10,10);
 	e->objs = new_obj(data);
 
-	data.color = 0xffffff;
-	data.data[0] = 0.5;
-	data.data[1] = 1;
-	set_vector(&data.vector, 6,6,-2);
+	data.color =  BLUE;//0x41698B;
+	data.data[0] = 2;
+	set_vector(&data.vector, 2,0,10);
 	pushback_obj(e->objs, data);
 
-/*	data.color = 0x41698B;
-	data.data[1] = 1;
-	set_vector(&data.vector, 0,4,10);
+	data.data[0] = 2;
+	data.color = 0x41698B;
+	set_vector(&data.vector, 0,2,10);
 	pushback_obj(e->objs, data);
-
+/*
 	data.color = 0x10f08a;
 	data.data[1] = 0;
 	set_vector(&data.vector, 0,-4,10);
@@ -98,7 +96,7 @@ void	init_env(t_env *e)
 	pushback_obj(e->objs, data);*/
 
 	data.type = POINT_LIGHT;
-	data.color = 0xffffff;
+	data.color = 0x0fffff;
 	set_vector(&data.vector, 10,10,-10);
 	e->lights = new_obj(data);
 	//set_vector(&data.vector, -10,-10,10);

@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 16:06:14 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/29 12:42:48 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/01 16:12:09 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,31 @@ void	display(t_env *e)
 	mlx_put_image_to_window(e->mlx, e->win, e->img, 0, 0);
 }
 
-/*t_vector	*get_viewplane_upleft(t_env *e)
-{
-	t_vector	*cam_pos;
-	t_vector	*cam_dir;
-	float		dist_cam_vp;
-	t_viewplane	*vp;
-	
-	t_vector vp_upleft;
 
-	cam_pos;
-	v1 = multv(cam_dir * vp->dist);
-	v2 = multv(e
-}*/
+int			key_hook(int keycode, t_env *e)
+{
+	if (keycode == 53)
+	{
+		mlx_destroy_image(e->mlx, e->img);
+		mlx_destroy_window(e->mlx, e->win);
+		exit(0);
+	}
+	if (keycode == KEY_DOWN)
+	{
+		((t_point_light *)e->lights->obj)->pos.y-=1;
+		printf("keydown %f\n",((t_point_light *)e->lights->obj)->pos.y);
+		((t_point_light *)e->lights->obj)->pos.x-=1;
+	//	((t_point_light *)e->lights->obj)->pos.z-=0.1;
+		//((t_sphere *)e->objs->obj)->c.y+=1;
+	}
+	if (keycode == KEY_UP)
+	{
+		//((t_sphere *)e->objs->obj)->c.y-=1;
+		((t_point_light *)e->lights->obj)->pos.y+=1;
+		((t_point_light *)e->lights->obj)->pos.x+=1;
+	//	((t_point_light *)e->lights->obj)->pos.z+=0.1;
+	}
+	printf("keycode %d\n", keycode);
+	expose(e);
+	return (0);
+}

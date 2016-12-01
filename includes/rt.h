@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:17:49 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/29 12:35:05 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/01 13:24:56 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct		s_vector
 	float			y;
 	float			z;
 }					t_vector;
+
+typedef struct		s_material
+{
+	int				diffuse_color;
+	int				bright;
+}					t_material;
 
 typedef struct		s_ray
 {
@@ -66,6 +72,7 @@ typedef struct		s_plane
 typedef struct		s_sphere
 {
 	t_vector		c;
+	t_material		mat;
 	float			r;
 	int				color;
 }					t_sphere;
@@ -92,15 +99,11 @@ typedef struct		s_env
 typedef struct		s_data
 {
 	t_vector	vector;
-	float		data[1];
+	float		data[2];
 	int			color;
 	int			type;
 }					t_data;
 
-typedef struct		s_material
-{
-	int				diffuse_color;
-}					t_material;
 
 typedef struct		s_point_light
 {
@@ -134,6 +137,7 @@ float			dist(const t_vector *a, const t_vector *b);
 t_vector		*normalize(t_vector *vct);
 float			norme(const t_vector *vct);
 float			dot_product(const t_vector *a, const t_vector *b);
+t_vector *revertv(t_vector *vct);
 
 float			throw_ray_sphere(const t_ray ray, const t_sphere *sphere);
 
@@ -157,4 +161,6 @@ int		get_light_at(t_vector *normal, t_vector *hit_point, t_point_light *light, t
 int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point);
 
 t_point_light *new_light(t_data data);
+
+
 #endif

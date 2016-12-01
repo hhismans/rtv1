@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:50:21 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/29 12:05:58 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/01 15:37:05 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,19 @@
 # define VP_HEIGHT 20
 # define DEFAULT_VP_DIST 100
 
-# define WIDTH 640
-# define HEIGHT 640
+# define WIDTH 1000
+# define HEIGHT 1000
 # define BLUE 0xff
 # define RED 0xff0000
 # define BLACK 0
 # define WHITE 0xffffff
 # define BACKGROUND_COLOR 0
 
-# define NO_INTERSEC FLT_MIN
+# define NO_INTERSEC -1
+
+
+# define KEY_DOWN 125
+# define KEY_UP 126
 
 enum
 {
