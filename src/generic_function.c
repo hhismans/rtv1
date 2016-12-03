@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 08:03:28 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/01 16:15:13 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/03 18:07:38 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,20 @@ int		get_color(int x, int y, t_env *e) // ca segfault ici
 	//set_ray_parallele(&ray, &vp_pos);
 	object_hitted = NULL;
 	t = FLT_MAX;
+	int  i = 0;
 	while (objs)
 	{
+		i++;
 		set_ray(&ray, &vp_pos, e->cam->o);
 		if (objs->type == SPHERE)
-			t_tmp = throw_ray_sphere(ray, (t_sphere *)(objs->obj));
-/*		if (objs->type == PLAN)
 		{
 			t_tmp = throw_ray_sphere(ray, (t_sphere *)(objs->obj));
-		}*/
-		if (t_tmp < t && t_tmp != NO_INTERSEC)
+			}
+		if (objs->type == PLANE)
+		{
+			t_tmp = throw_ray_plane(ray, (t_plane *)(objs->obj));
+		}
+		if (t_tmp < t && t_tmp != NO_INTERSEC && t_tmp > 0)
 		{
 			object_hitted = objs;
 			cpy_vector(&hitting_point, addv(&ray.o, multv(&ray.dir, t_tmp)));
@@ -49,11 +53,14 @@ int		get_color(int x, int y, t_env *e) // ca segfault ici
 	}
 	if (object_hitted)
 	{
+		if (x < WIDTH)
+		{
+			//printf("object_hitted color : %#08x\n", ((t_plane *)object_hitted->obj)->mat.diffuse_color);
+			//printf("t = : %f\n", t);
+		}
 		//printf("coucou3 %d \n",((t_sphere *)object_hitted->obj)->color);
 		//ici qui aura des truc cool !
 		int ret;
-		if (x == WIDTH / 2 + 10 && y == HEIGHT / 2)
-			printf("color : %d\n", ((t_sphere *)object_hitted->obj)->mat.bright);
 
 		ret = light(object_hitted, e, &hitting_point);
 
@@ -116,10 +123,12 @@ int		get_light_at(t_vector *normal, t_vector *hit_point, t_point_light *light, t
 	if (angle <= 0)
 	{
 		ret = BACKGROUND_COLOR;
+		revertv(normal);
+		angle = dot_product(&lightvector, normal);
 	}
 	else
 	{
-		ret = mult_color(light_filter(mat->diffuse_color, light->color), angle);
+		ret = mult_color(light_filter(mat->diffuse_color, light->color), (sqrtf(angle)));
 		if (mat->bright)
 			ret = add_color(ret, mult_color(light->color, angle * angle *angle * angle * angle * angle * angle * angle * angle * angle));
 	}
@@ -136,6 +145,14 @@ float	dist_(t_vector *a, t_vector *b)
 	return(norme(&v));
 }
 
+float	dot_light(t_vector *normal, t_vector *hit_point, t_point_light *light)
+{
+	t_vector lightvector;
+	set_vector(&lightvector, hit_point->x - light->pos.x,
+										hit_point->y - light->pos.y,
+										hit_point->z - light->pos.z);
+	return (dot_product(normal, &lightvector));
+}
 
 
 int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point)
@@ -147,6 +164,7 @@ int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point)
 	float t_tmp;
 	float light_to_point_dist;
 
+	t_material *mat;
 	int			there_is_obstacle;
 	lights = e->lights;
 	t_ray ray;
@@ -164,30 +182,44 @@ int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point)
 		{
 			if (objs != obj_hitted)
 			{
+				set_ray(&ray, hit_point, &((t_point_light *)(lights->obj))->pos);
 				if (objs->type == SPHERE)
 				{
-					set_ray(&ray, hit_point, &((t_point_light *)(lights->obj))->pos);
-					/*cpy_vector(&normal_v, hit_point);
-					subv(&normal_v, &((t_sphere *)(objs->obj))->c);
-					normalize(&normal_v);
-					revertv(&normal_v);*/
 					t_tmp = throw_ray_sphere(ray, (t_sphere *)(objs->obj));
-	//					printf("ttmp %f \n", t_tmp);
-					if (t_tmp < light_to_point_dist && t_tmp != NO_INTERSEC)
-						there_is_obstacle = 1;
-						break;
 				}
+				if (objs->type == PLANE)
+				{
+					t_tmp = throw_ray_plane(ray, (t_plane *)(objs->obj));
+				}
+				if (objs->type == CONE)
+				{
+					t_tmp = throw_ray_plane(ray, (t_plane *)(objs->obj));
+				}
+				if (t_tmp < light_to_point_dist && t_tmp != NO_INTERSEC)
+					there_is_obstacle = 1;
+					break;
 			}
 			objs = objs->next;
 		}
 		if (!there_is_obstacle)
 		{
 			set_ray(&ray, hit_point, &((t_point_light *)(lights->obj))->pos);
-			cpy_vector(&normal_v, hit_point);
-			subv(&normal_v, &((t_sphere *)(obj_hitted->obj))->c);
+			if (obj_hitted->type == SPHERE)
+			{
+				cpy_vector(&normal_v, hit_point);
+				subv(&normal_v, &((t_sphere *)(obj_hitted->obj))->c);
+				mat = &((t_sphere*)obj_hitted->obj)->mat;
+				revertv(&normal_v);
+			}
+			else if (obj_hitted->type == PLANE)
+			{
+				cpy_vector(&normal_v, &((t_plane *)(obj_hitted->obj))->normal);
+				mat = &((t_plane*)obj_hitted->obj)->mat;
+				if (dot_light(&normal_v,hit_point, (t_point_light *)(lights->obj)) < 0)
+					revertv(&normal_v);
+			}
 			normalize(&normal_v);
-			revertv(&normal_v);
-			ret_color = add_color(ret_color, get_light_at(&normal_v,hit_point, (t_point_light *)(lights->obj), &((t_sphere*)obj_hitted->obj)->mat));
+			ret_color = add_color(ret_color, get_light_at(&normal_v,hit_point, (t_point_light *)(lights->obj), mat));
 		}
 		lights = lights->next;
 	}

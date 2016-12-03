@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:17:49 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/01 13:24:56 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/03 18:06:57 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,9 @@ typedef struct		s_camera
 
 typedef struct		s_plane
 {
-	float			a;
-	float			b;
-	float			c;
+	t_vector		normal;
 	float			d;
+	t_material		mat;
 }					t_plane;
 
 typedef struct		s_sphere
@@ -76,6 +75,14 @@ typedef struct		s_sphere
 	float			r;
 	int				color;
 }					t_sphere;
+
+typedef struct		s_cone
+{
+	t_vector		c;
+	t_material		mat;
+	float			angle;
+	int				color;
+}					t_cone;
 
 typedef struct			s_obj_list
 {
@@ -113,7 +120,9 @@ typedef struct		s_point_light
 
 
 t_sphere		*new_sphere(const t_data data);
+t_plane			*new_plane(const t_data data);
 
+t_cone *new_cone(const t_data data)
 
 t_obj_list		*new_obj(t_data data);
 t_obj_list		*pushback_obj(t_obj_list *list, t_data data);
@@ -140,6 +149,8 @@ float			dot_product(const t_vector *a, const t_vector *b);
 t_vector *revertv(t_vector *vct);
 
 float			throw_ray_sphere(const t_ray ray, const t_sphere *sphere);
+float	throw_ray_plane(const t_ray ray, const t_plane *plane);
+float	throw_ray_cone(const t_ray ray, const t_sphere *sphere);
 
 t_vector		*cpy_vector(t_vector *dst, const t_vector *src);
 

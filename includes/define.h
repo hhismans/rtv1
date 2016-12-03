@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:50:21 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/01 15:37:05 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/03 12:59:28 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 enum
 {
 	SPHERE,
-	POINT_LIGHT
+	POINT_LIGHT,
+	PLANE
 };
 #endif

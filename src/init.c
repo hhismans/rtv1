@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:46:43 by hhismans          #+#    #+#             */
-/*   Updated: 2016/11/29 04:06:24 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/03 14:52:12 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_vector	*get_viewplane_upleft(const t_camera *cam)
 t_camera *cam_init(t_camera *cam)
 {
 	cam->o = new_vector(CAMERA_POSX, CAMERA_POSY, CAMERA_POSZ);
+	//cam->up_vunit = new_vector(UNIT_UPX, UNIT_UPY, UNIT_UPZ);
 	cam->up_vunit = new_vector(UNIT_UPX, UNIT_UPY, UNIT_UPZ);
 	cam->right_vunit = new_vector(UNIT_RIGHTX, UNIT_RIGHTY, UNIT_RIGHTZ);
 	cam->dir = vectorial(cam->up_vunit, cam->right_vunit);
