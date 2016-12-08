@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:50:21 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/03 12:59:28 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/08 14:04:45 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,21 @@
 
 # define NO_INTERSEC -1
 
+# define ROYAL_BLUE 0x4169E1
+# define STEEL_BLUE 0x4882b4
+
+# define DARK_SEA_GREEN 0x8fbc8f
+# define FOREST_GREEN 0x228b22
+# define GOLDEN 0xffd700
+# define ORANGE_RED 0xff4500
 
 # define KEY_DOWN 125
 # define KEY_UP 126
-
 enum
 {
 	SPHERE,
 	POINT_LIGHT,
-	PLANE
+	PLANE,
+	CONE
 };
 #endif

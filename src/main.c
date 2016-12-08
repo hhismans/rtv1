@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:37:06 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/03 17:15:38 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/08 19:23:00 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	init_env(t_env *e)
 	t_data	data;
 // changer
 	data.type = SPHERE;
-	data.color = RED;
+	data.color = GOLDEN;
 	data.data[0] = 1;
 	data.data[1] = 1;
-	set_vector(&data.vector, 3,3,10);
+	set_vector(&data.vector, 0,0,7);
 	e->objs = new_obj(data);
 
-	data.color = 0x41698B;
+	/*data.color = 0x41698B;
 	data.data[0] = 2;
 	set_vector(&data.vector, 2,2,10);
 	pushback_obj(e->objs, data);
@@ -63,7 +63,7 @@ void	init_env(t_env *e)
 	data.data[0] = 2;
 	data.color =  BLUE;//0x41698B;
 	set_vector(&data.vector, 2,2,10);
-	pushback_obj(e->objs, data);
+	pushback_obj(e->objs, data);*/
 /*
 	data.color = 0x10f08a;
 	data.data[1] = 0;
@@ -117,11 +117,11 @@ void	init_env(t_env *e)
 	data.data[1] = 0;
 	pushback_obj(e->objs, data);
 
-	data.color = 0xffff00;
+	/*data.color = 0xffff00;
 	set_vector(&data.vector, 0, 0, 1); // a,b,c
 	data.data[0] = -50; // d
 	data.data[1] = 0;
-	pushback_obj(e->objs, data);
+	pushback_obj(e->objs, data);*/
 
 	data.color = 0xff00ff;
 	set_vector(&data.vector, 1, 0, 0); // a,b,c
@@ -129,17 +129,12 @@ void	init_env(t_env *e)
 	data.data[1] = 0;
 	pushback_obj(e->objs, data);
 
-	data.color = 0xffff00;
-	set_vector(&data.vector, 1, 1, 1); // a,b,c
-	data.data[0] = -19; // d
-	data.data[1] = 1;
-	pushback_obj(e->objs, data);
-
-	printf("coucou\n");
 	data.type = POINT_LIGHT;
 	data.color = 0xffffff;
-	set_vector(&data.vector, 0,0,-20);
+	set_vector(&data.vector, 0,0, 0);
 	e->lights = new_obj(data);
+	set_vector(&data.vector, 0,0, 20);
+	pushback_obj(e->lights, data);
 
 	//set_vector(&data.vector, -10,-10,10);
 	//pushback_obj(e->lights,data);

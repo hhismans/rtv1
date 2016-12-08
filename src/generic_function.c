@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 08:03:28 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/03 18:07:38 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/08 19:24:14 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		get_color(int x, int y, t_env *e) // ca segfault ici
 		//ici qui aura des truc cool !
 		int ret;
 
-		ret = light(object_hitted, e, &hitting_point);
+		ret = light(object_hitted, e, &hitting_point, (x == WIDTH /2 && y == HEIGHT/2));
 
 		return (ret);//((t_sphere *)object_hitted->obj)->color);
 	}
@@ -109,29 +109,13 @@ int		add_color(int color1, int color2)
 	return ((r << 16) + (v << 8) + b);
 }
 
-int		get_light_at(t_vector *normal, t_vector *hit_point, t_point_light *light, t_material *mat)
+float	y_xsquared(float x)
 {
-	t_vector	lightvector;
-	float		angle;
-	int			ret;
+	float ret;
 
-	set_vector(&lightvector, hit_point->x - light->pos.x,
-										hit_point->y - light->pos.y,
-										hit_point->z - light->pos.z);
-	normalize(&lightvector);
-	angle = dot_product(&lightvector, normal);
-	if (angle <= 0)
-	{
-		ret = BACKGROUND_COLOR;
-		revertv(normal);
-		angle = dot_product(&lightvector, normal);
-	}
-	else
-	{
-		ret = mult_color(light_filter(mat->diffuse_color, light->color), (sqrtf(angle)));
-		if (mat->bright)
-			ret = add_color(ret, mult_color(light->color, angle * angle *angle * angle * angle * angle * angle * angle * angle * angle));
-	}
+	return (x);
+	if ((ret = 1 / squared(x) > 1))
+		return (1);
 	return (ret);
 }
 
@@ -145,6 +129,35 @@ float	dist_(t_vector *a, t_vector *b)
 	return(norme(&v));
 }
 
+int		get_light_at(t_vector *normal, t_vector *hit_point, t_point_light *light, t_material *mat, int debug)
+{
+	(void)debug;
+	t_vector	lightvector;
+	float		angle;
+	int			ret;
+	float		dist_lh;
+
+	dist_lh = dist_(hit_point, &light->pos);
+	set_vector(&lightvector, hit_point->x - light->pos.x,
+										hit_point->y - light->pos.y,
+										hit_point->z - light->pos.z);
+	normalize(&lightvector);
+	angle = dot_product(&lightvector, normal);
+	if (angle <= 0)
+	{
+		ret = BACKGROUND_COLOR;
+		revertv(normal);
+		angle = dot_product(&lightvector, normal);
+	}
+	else
+	{
+		ret = mult_color(light_filter(mat->diffuse_color, light->color), y_xsquared(dist_lh) * (sqrtf(angle)));
+		/*if (mat->bright)
+			ret = add_color(ret, mult_color(light->color, y_xsquared(dist_) * angle * angle *angle * angle * angle * angle * angle * angle * angle * angle));*/
+	}
+	return (ret);
+}
+
 float	dot_light(t_vector *normal, t_vector *hit_point, t_point_light *light)
 {
 	t_vector lightvector;
@@ -155,7 +168,7 @@ float	dot_light(t_vector *normal, t_vector *hit_point, t_point_light *light)
 }
 
 
-int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point)
+int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point, int debug)
 {
 	t_obj_list	*objs;
 	t_obj_list	*lights;
@@ -195,7 +208,7 @@ int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point)
 				{
 					t_tmp = throw_ray_plane(ray, (t_plane *)(objs->obj));
 				}
-				if (t_tmp < light_to_point_dist && t_tmp != NO_INTERSEC)
+				if (t_tmp < light_to_point_dist && t_tmp != NO_INTERSEC && t_tmp > 0)
 					there_is_obstacle = 1;
 					break;
 			}
@@ -219,7 +232,7 @@ int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point)
 					revertv(&normal_v);
 			}
 			normalize(&normal_v);
-			ret_color = add_color(ret_color, get_light_at(&normal_v,hit_point, (t_point_light *)(lights->obj), mat));
+			ret_color = add_color(ret_color, get_light_at(&normal_v,hit_point, (t_point_light *)(lights->obj), mat, debug));
 		}
 		lights = lights->next;
 	}

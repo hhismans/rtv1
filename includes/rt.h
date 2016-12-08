@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:17:49 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/03 18:06:57 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/08 16:55:59 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct		s_point_light
 t_sphere		*new_sphere(const t_data data);
 t_plane			*new_plane(const t_data data);
 
-t_cone *new_cone(const t_data data)
+t_cone *new_cone(const t_data data);
 
 t_obj_list		*new_obj(t_data data);
 t_obj_list		*pushback_obj(t_obj_list *list, t_data data);
@@ -149,8 +149,8 @@ float			dot_product(const t_vector *a, const t_vector *b);
 t_vector *revertv(t_vector *vct);
 
 float			throw_ray_sphere(const t_ray ray, const t_sphere *sphere);
-float	throw_ray_plane(const t_ray ray, const t_plane *plane);
-float	throw_ray_cone(const t_ray ray, const t_sphere *sphere);
+float			throw_ray_plane(const t_ray ray, const t_plane *plane);
+float			throw_ray_cone(const t_ray ray, const t_sphere *sphere);
 
 t_vector		*cpy_vector(t_vector *dst, const t_vector *src);
 
@@ -168,8 +168,8 @@ int		get_color(int x, int y, t_env *e);
 void	set_ray(t_ray *ray, t_vector *dest, t_vector *origine);
 void	set_ray_parallele(t_ray *ray, t_vector *dest);
 
-int		get_light_at(t_vector *normal, t_vector *hit_point, t_point_light *light, t_material *mat);
-int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point);
+int		get_light_at(t_vector *normal, t_vector *hit_point, t_point_light *light, t_material *mat, int debug);
+int		light(t_obj_list *obj_hitted, t_env *e, t_vector *hit_point, int debug);
 
 t_point_light *new_light(t_data data);
 
