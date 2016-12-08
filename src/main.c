@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 16:37:06 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/08 19:23:00 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/08 21:32:18 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_env(t_env *e)
 	data.color = GOLDEN;
 	data.data[0] = 1;
 	data.data[1] = 1;
-	set_vector(&data.vector, 0,0,7);
+	set_vector(&data.vector, 0,0,15);
 	e->objs = new_obj(data);
 
 	/*data.color = 0x41698B;
@@ -97,33 +97,38 @@ void	init_env(t_env *e)
 	pushback_obj(e->objs, data);*/
 
 	data.type = PLANE;
-	data.color = 0xffaaaa;
+	data.color = ROYAL_BLUE;
 	set_vector(&data.vector, 0, 1, 0); // a,b,c
 	data.data[0] = -5; // d
 	data.data[1] = 0;
-	pushback_obj(e->objs, data);
+	//pushback_obj(e->objs, data);
 	
 
 	data.type = PLANE;
-	data.color = BLUE;
+	data.color = FOREST_GREEN;
 	set_vector(&data.vector,0, 1, 0); // a,b,c
 	data.data[0] = 5; // d
-	data.data[1] = 0;
+	data.data[1] = 1;
 	pushback_obj(e->objs, data);
 
-	data.color = 0x00ff00;
+	data.color = ORANGE_RED;
 	set_vector(&data.vector, 1, 0, 0); // a,b,c
 	data.data[0] = -5; // d
 	data.data[1] = 0;
 	pushback_obj(e->objs, data);
 
+	data.color = BLUE;
+	set_vector(&data.vector, 0, 0, 1); // a,b,c
+	data.data[0] = 120; // d
+	data.data[1] = 1;
+	pushback_obj(e->objs, data);
 	/*data.color = 0xffff00;
 	set_vector(&data.vector, 0, 0, 1); // a,b,c
 	data.data[0] = -50; // d
 	data.data[1] = 0;
 	pushback_obj(e->objs, data);*/
 
-	data.color = 0xff00ff;
+	data.color = DARK_SEA_GREEN;
 	set_vector(&data.vector, 1, 0, 0); // a,b,c
 	data.data[0] = 5; // d
 	data.data[1] = 0;
@@ -131,9 +136,13 @@ void	init_env(t_env *e)
 
 	data.type = POINT_LIGHT;
 	data.color = 0xffffff;
-	set_vector(&data.vector, 0,0, 0);
+	set_vector(&data.vector, 0,0, 10);
 	e->lights = new_obj(data);
-	set_vector(&data.vector, 0,0, 20);
+	set_vector(&data.vector, 1,0, 10);
+	pushback_obj(e->lights, data);
+	set_vector(&data.vector, -1,0, 10);
+	pushback_obj(e->lights, data);
+	set_vector(&data.vector, 0,0, 0);
 	pushback_obj(e->lights, data);
 
 	//set_vector(&data.vector, -10,-10,10);

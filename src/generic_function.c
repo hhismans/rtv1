@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 08:03:28 by hhismans          #+#    #+#             */
-/*   Updated: 2016/12/08 19:24:14 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/12/08 21:21:41 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ int		mult_color(int color, float mult)
 	r = ((color & 0xff0000) >> 16) * mult;
 	g = ((color & 0xff00) >> 8) * mult;
 	b = ((color & 0xff)) * mult;
+
+	r = r > 0xff ? 0xff : r;
+	g = g > 0xff ? 0xff : g;
+	b = b > 0xff ? 0xff : b;
 	return ((r << 16) + (g << 8) + b);
 }
 
@@ -113,9 +117,7 @@ float	y_xsquared(float x)
 {
 	float ret;
 
-	return (x);
-	if ((ret = 1 / squared(x) > 1))
-		return (1);
+	ret = 1/squared(x) * 100;
 	return (ret);
 }
 
@@ -151,10 +153,12 @@ int		get_light_at(t_vector *normal, t_vector *hit_point, t_point_light *light, t
 	}
 	else
 	{
-		ret = mult_color(light_filter(mat->diffuse_color, light->color), y_xsquared(dist_lh) * (sqrtf(angle)));
-		/*if (mat->bright)
-			ret = add_color(ret, mult_color(light->color, y_xsquared(dist_) * angle * angle *angle * angle * angle * angle * angle * angle * angle * angle));*/
+		ret = mult_color(light_filter(mat->diffuse_color, light->color), (sqrtf(angle * y_xsquared(dist_lh))));
+		if (mat->bright)
+			ret = add_color(ret, mult_color(light->color, (angle * angle * angle * angle * angle * angle * angle * angle * angle * angle)/2));
 	}
+	//if (y_xsquared(dist_lh) < 1)
+	//	return (add_color(ret, 0x0000ff));
 	return (ret);
 }
 
